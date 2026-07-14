@@ -1,0 +1,244 @@
+/* ====================================
+   HiFi Chats – Animations
+   ==================================== */
+
+/* ── Page Load Transition ── */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  background: var(--hifi-red);
+  z-index: 9999;
+  transform: scaleY(0);
+  transform-origin: top;
+  pointer-events: none;
+}
+
+.page-transition.entering {
+  animation: curtainDown 0.4s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.page-transition.leaving {
+  animation: curtainUp 0.4s cubic-bezier(0.76, 0, 0.24, 1) 0.1s forwards;
+}
+
+@keyframes curtainDown {
+  from { transform: scaleY(0); transform-origin: top; }
+  to   { transform: scaleY(1); transform-origin: top; }
+}
+
+@keyframes curtainUp {
+  from { transform: scaleY(1); transform-origin: bottom; }
+  to   { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ── Typewriter ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: '|';
+  animation: blink 1s infinite;
+  color: var(--hifi-red);
+}
+
+/* ── Float animation ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+.float-anim {
+  animation: float 4s ease-in-out infinite;
+}
+
+.float-anim-slow {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ── Spin animations ── */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.spin-slow { animation: spin-slow 20s linear infinite; }
+
+/* ── Glow pulse ── */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(232,39,42,0.3); }
+  50%       { box-shadow: 0 0 40px rgba(232,39,42,0.7), 0 0 80px rgba(232,39,42,0.3); }
+}
+
+.glow-red { animation: glow-pulse 2.5s ease-in-out infinite; }
+
+@keyframes glow-pulse-gold {
+  0%, 100% { box-shadow: 0 0 20px rgba(255,210,63,0.2); }
+  50%       { box-shadow: 0 0 40px rgba(255,210,63,0.5), 0 0 80px rgba(255,210,63,0.2); }
+}
+
+.glow-gold { animation: glow-pulse-gold 3s ease-in-out infinite; }
+
+/* ── Shimmer ── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, var(--hifi-yellow) 0%, #fff 25%, var(--hifi-orange) 50%, #fff 75%, var(--hifi-yellow) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ── Gradient text ── */
+.gradient-text-red {
+  background: var(--grad-red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-gold {
+  background: var(--grad-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Stagger children ── */
+.stagger > * { opacity: 0; transform: translateY(30px); }
+.stagger.visible > *:nth-child(1) { animation: staggerIn 0.6s 0.0s forwards; }
+.stagger.visible > *:nth-child(2) { animation: staggerIn 0.6s 0.1s forwards; }
+.stagger.visible > *:nth-child(3) { animation: staggerIn 0.6s 0.2s forwards; }
+.stagger.visible > *:nth-child(4) { animation: staggerIn 0.6s 0.3s forwards; }
+.stagger.visible > *:nth-child(5) { animation: staggerIn 0.6s 0.4s forwards; }
+.stagger.visible > *:nth-child(6) { animation: staggerIn 0.6s 0.5s forwards; }
+.stagger.visible > *:nth-child(7) { animation: staggerIn 0.6s 0.6s forwards; }
+.stagger.visible > *:nth-child(8) { animation: staggerIn 0.6s 0.7s forwards; }
+.stagger.visible > *:nth-child(n+9) { animation: staggerIn 0.6s 0.8s forwards; }
+
+@keyframes staggerIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Hero Slide ── */
+@keyframes slideInRight {
+  from { transform: translateX(60px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-60px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(1.1); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ── Neon flicker ── */
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow: 0 0 10px var(--hifi-red-light), 0 0 30px var(--hifi-red), 0 0 60px var(--hifi-red);
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+}
+
+.neon-text {
+  color: var(--hifi-red-light);
+  animation: neon-flicker 3s infinite alternate;
+}
+
+/* ── Scale hover ── */
+.hover-scale {
+  transition: transform var(--trans-slow);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* ── Image zoom on hover ── */
+.img-zoom {
+  overflow: hidden;
+}
+
+.img-zoom img {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.img-zoom:hover img {
+  transform: scale(1.08);
+}
+
+/* ── Underline grow ── */
+.underline-grow {
+  position: relative;
+}
+
+.underline-grow::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--grad-red);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.underline-grow:hover::after {
+  width: 100%;
+}
+
+/* ── Particle dots background ── */
+.particles-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.particles-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,210,63,0.08) 1px, transparent 1px),
+    radial-gradient(circle, rgba(232,39,42,0.05) 1px, transparent 1px);
+  background-size: 60px 60px, 40px 40px;
+  background-position: 0 0, 30px 30px;
+  pointer-events: none;
+  animation: particle-drift 20s linear infinite;
+}
+
+@keyframes particle-drift {
+  from { background-position: 0 0, 30px 30px; }
+  to   { background-position: 60px 60px, 90px 90px; }
+}
+
+/* ── Loading dots ── */
+.loading-dots span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--hifi-red);
+  margin: 0 3px;
+  animation: dotBounce 1.4s ease-in-out infinite;
+}
+
+.loading-dots span:nth-child(2) { animation-delay: 0.16s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.32s; }
+
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40%            { transform: scale(1);   opacity: 1; }
+}

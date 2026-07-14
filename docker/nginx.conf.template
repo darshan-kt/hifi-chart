@@ -1,0 +1,26 @@
+server {
+    listen ${PORT};
+    server_name _;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # Static site — every page is a real .html file, no client-side router.
+    location / {
+        try_files $uri $uri.html $uri/ =404;
+    }
+
+    # Cache fonts/images/scripts/styles, keep HTML always revalidated
+    location ~* \.(?:css|js|png|jpg|jpeg|svg|ico)$ {
+        expires 7d;
+        add_header Cache-Control "public";
+        access_log off;
+    }
+
+    location ~* \.html$ {
+        add_header Cache-Control "no-cache";
+    }
+
+    gzip on;
+    gzip_types text/css application/javascript image/svg+xml;
+}

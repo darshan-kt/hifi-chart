@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍔</text></svg>">
+  <title>Home | HiFi Chats - Street Food & Conversation</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* Inline styles for index-specific elements if any */
+    .hero-section {
+      height: 80vh;
+      min-height: 550px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .hero-slider {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+      display: flex;
+      align-items: center;
+    }
+    .hero-slide.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 2;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15,15,26,0.6) 0%, rgba(15,15,26,0.9) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 800px;
+      padding-top: var(--space-3xl);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+      color: var(--hifi-white);
+    }
+    .hero-title span {
+      color: var(--hifi-yellow);
+    }
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--hifi-muted);
+      margin-bottom: var(--space-xl);
+      max-width: 600px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all var(--trans-fast);
+      backdrop-filter: blur(10px);
+    }
+    .slider-btn:hover {
+      background: var(--hifi-red);
+      border-color: var(--hifi-red);
+      transform: translateY(-50%) scale(1.1);
+    }
+    #hero-prev { left: var(--space-xl); }
+    #hero-next { right: var(--space-xl); }
+    
+    .hero-dots {
+      position: absolute;
+      bottom: var(--space-xl);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: var(--space-sm);
+      z-index: 10;
+    }
+    .hero-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all var(--trans-fast);
+    }
+    .hero-dot.active {
+      background: var(--hifi-yellow);
+      transform: scale(1.2);
+    }
+    
+    /* Features */
+    .grid {
+      display: grid;
+      gap: var(--space-2xl);
+    }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+    .feature-item {
+      display: flex;
+      gap: var(--space-md);
+    }
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(232,39,42,0.1);
+      border: 1px solid rgba(232,39,42,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--hifi-red);
+      flex-shrink: 0;
+    }
+    .feature-item h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+    .feature-item p {
+      color: var(--hifi-muted);
+      font-size: 0.9rem;
+    }
+    .img-wrapper {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--hifi-border);
+    }
+    .img-responsive {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .flex-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Backgrounds */
+    .bg-light {
+      background: var(--hifi-charcoal);
+    }
+    
+    /* Specials Cards */
+    .card-img-wrap {
+      height: 220px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .card:hover .card-img-wrap img {
+      transform: scale(1.08);
+    }
+    .card-badge {
+      position: absolute;
+      top: var(--space-md);
+      left: var(--space-md);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .bg-primary { background: var(--hifi-red); }
+    .bg-accent { background: var(--hifi-green); }
+    
+    .card-content {
+      padding: var(--space-lg);
+    }
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin-bottom: var(--space-sm);
+    }
+    .card-text {
+      color: var(--hifi-muted);
+      font-size: 0.9rem;
+      margin-bottom: var(--space-lg);
+      line-height: 1.5;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-price {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--hifi-yellow);
+    }
+    
+    /* Buttons in Cards */
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-family: var(--font-display);
+      transition: all var(--trans-fast);
+    }
+    .btn-outline:hover {
+      background: var(--hifi-white);
+      color: var(--hifi-dark);
+      border-color: var(--hifi-white);
+    }
+    
+    .btn-outline.btn-lg {
+      padding: 1rem 2.2rem;
+      font-size: 0.95rem;
+    }
+    
+    .btn-outline.btn-lg:hover {
+      background: var(--hifi-white);
+      color: var(--hifi-dark);
+    }
+
+    .p-lg {
+      padding: var(--space-2xl);
+    }
+    
+    /* Hide scrollbars on body */
+    @media (max-width: 768px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      #hero-prev, #hero-next { display: none; }
+    }
+  </style>
+</head>
+<body class="particles-bg">
+  <!-- Page Transition Wrapper -->
+  <div class="page-transition"></div>
+
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo" data-nav>
+        <div class="logo-icon">🍔</div>
+        <div class="logo-text">
+          <span class="logo-name">HiFi Chats</span>
+          <span class="logo-tagline">Fast Food · Chat Center</span>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link active" data-nav>Home</a>
+        <a href="menu.html" class="nav-link" data-nav>Menu</a>
+        <a href="about.html" class="nav-link" data-nav>About</a>
+        <a href="catering.html" class="nav-link" data-nav>Catering</a>
+        <a href="chat.html" class="nav-link" data-nav>Chat Center</a>
+        <a href="contact.html" class="nav-link" data-nav>Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button type="button" class="nav-order-btn cart-toggle">Order Now 🛒 <span class="order-badge" style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:#FFD23F;color:#0F0F1A;border-radius:50%;font-size:0.65rem;font-weight:800;margin-left:4px;transition:transform 0.2s;">0</span></button>
+      </div>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Menu -->
+  <nav class="nav-mobile" id="mobile-nav">
+    <a href="index.html" class="nav-link" data-nav>Home</a>
+    <a href="menu.html" class="nav-link" data-nav>Menu</a>
+    <a href="about.html" class="nav-link" data-nav>About</a>
+    <a href="catering.html" class="nav-link" data-nav>Catering</a>
+    <a href="chat.html" class="nav-link" data-nav>Chat Center</a>
+    <a href="contact.html" class="nav-link" data-nav>Contact</a>
+    <button type="button" class="nav-order-btn cart-toggle">Order Now 🛒 <span class="order-badge" style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:#FFD23F;color:#0F0F1A;border-radius:50%;font-size:0.65rem;font-weight:800;margin-left:4px;transition:transform 0.2s;">0</span></button>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Slider Section -->
+    <section class="hero-section">
+      <div class="hero-slider">
+        <!-- Slide 1 (Active) -->
+        <div class="hero-slide active">
+          <div class="hero-bg" style="background-image: url('assets/hero_food_spread.png');" data-parallax="0.15"></div>
+          <div class="hero-content container">
+            <span class="section-label">Welcome to HiFi Chats</span>
+            <h1 class="hero-title">Where Every Bite<br>Starts a <span class="gradient-text-red">Conversation</span></h1>
+            <p class="hero-subtitle">Handcrafted burgers, wraps, and bowls built to bring people together. Customize everything in our live chat!</p>
+            <div class="hero-actions">
+              <a href="menu.html" class="btn btn-primary btn-lg" data-nav>Explore Menu <span>➔</span></a>
+              <a href="chat.html" class="btn btn-secondary btn-lg" data-nav>Chat to Order 💬</a>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="hero-slide">
+          <div class="hero-bg" style="background-image: url('assets/burger.png');" data-parallax="0.15"></div>
+          <div class="hero-content container">
+            <span class="section-label">Double Smash Goodness</span>
+            <h1 class="hero-title">Sizzling & Juicy<br><span id="typewriter" class="cursor-blink">Burgers</span></h1>
+            <p class="hero-subtitle">Freshly crushed patties, melted cheese, caramelized onions, and our secret HiFi sauce on toasted brioche.</p>
+            <div class="hero-actions">
+              <a href="menu.html" class="btn btn-primary btn-lg" data-nav>Order Burger Now 🍔</a>
+              <a href="about.html" class="btn btn-secondary btn-lg" data-nav>Our Story</a>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="hero-slide">
+          <div class="hero-bg" style="background-image: url('assets/interior.png');" data-parallax="0.15"></div>
+          <div class="hero-content container">
+            <span class="section-label">The Diner Vibe</span>
+            <h1 class="hero-title">More Than Meal,<br>It's a <span class="gradient-text-gold">Social Vibe</span></h1>
+            <p class="hero-subtitle">Step into our glowing brick & neon lounge, or chat with our live agents from anywhere.</p>
+            <div class="hero-actions">
+              <a href="contact.html" class="btn btn-gold btn-lg" data-nav>Find Locations 📍</a>
+              <a href="catering.html" class="btn btn-secondary btn-lg" data-nav>Event Catering</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slider Navigation Buttons -->
+      <button id="hero-prev" class="slider-btn" aria-label="Previous Slide">➔</button>
+      <button id="hero-next" class="slider-btn" aria-label="Next Slide">➔</button>
+
+      <!-- Slider Pagination Dots -->
+      <div class="hero-dots">
+        <span class="hero-dot active"></span>
+        <span class="hero-dot"></span>
+        <span class="hero-dot"></span>
+      </div>
+    </section>
+
+    <!-- Marquee Ticker -->
+    <div class="ticker-wrap">
+      <div class="ticker-track">
+        <span class="ticker-item"><span class="ticker-dot">★</span> SMASH BURGERS</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> FRESH WRAPS</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> POKE BOWLS</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> LOADED FRIES</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> CRAFT SHAKES</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> ORDER ONLINE</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> CATERING AVAILABLE</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> SMASH BURGERS</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> FRESH WRAPS</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> POKE BOWLS</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> LOADED FRIES</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> CRAFT SHAKES</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> ORDER ONLINE</span>
+        <span class="ticker-item"><span class="ticker-dot">★</span> CATERING AVAILABLE</span>
+      </div>
+    </div>
+
+    <!-- Intro & Features Section -->
+    <section class="section-padding container">
+      <div class="grid grid-2">
+        <div class="reveal-left">
+          <span class="section-label">Who We Are</span>
+          <h2 class="section-title">Where Culinary Craft<br>Meets Tech Innovation</h2>
+          <p class="section-subtitle" style="max-width: 100%; margin-bottom: 2rem;">We believe food is the ultimate community builder. That's why we pair our premium handcrafted menu with our custom Live Chat Center, letting you order, customize, and chat with our kitchen crew in real time.</p>
+          <div class="feature-list stagger">
+            <div class="feature-item">
+              <div class="feature-icon">🔥</div>
+              <div>
+                <h3>Premium Ingredients</h3>
+                <p>100% fresh, locally-sourced ingredients prepared daily. No compromises.</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">💬</div>
+              <div>
+                <h3>Live Chat Ordering</h3>
+                <p>Customize your food in real-time with our friendly burger chefs.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-right flex-center">
+          <div class="img-wrapper shadow-lg float-anim" style="max-height: 480px;">
+            <img src="assets/interior.png" alt="Diner Interior" class="img-responsive">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section-padding bg-light">
+      <div class="container">
+        <div class="stats-grid stagger">
+          <div class="stat-item">
+            <div class="stat-number" data-count="15000" data-suffix="+">0</div>
+            <div class="stat-label">Chats Resolved</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="45000" data-suffix="+">0</div>
+            <div class="stat-label">Happy Diners</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="4.9" data-suffix="/5">0</div>
+            <div class="stat-label">Google Rating</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="100" data-suffix="%">0</div>
+            <div class="stat-label">Freshness Guarantees</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Specials / Signature Items Section -->
+    <section class="section-padding container">
+      <div class="text-center" style="margin-bottom: 3rem;">
+        <span class="section-label" style="justify-content: center;">Menu Highlights</span>
+        <h2 class="section-title">Chef's Signature Specials</h2>
+        <p class="section-subtitle" style="margin-inline: auto;">Check out some of our most highly recommended, crowd-pleasing culinary masterpieces.</p>
+      </div>
+      
+      <div class="grid grid-3 stagger">
+        <!-- Card 1 -->
+        <div class="card reveal">
+          <div class="card-img-wrap">
+            <img src="assets/burger.png" alt="HiFi Classic Burger" class="img-responsive">
+            <span class="card-badge bg-primary">Best Seller</span>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">HiFi Classic Burger</h3>
+            <p class="card-text">Double smash patty, melted cheddar, house pickle, dynamic burger sauce, toasted brioche bun.</p>
+            <div class="card-footer">
+              <span class="card-price">$12.99</span>
+              <a href="menu.html" class="btn btn-outline" data-nav>Order Now</a>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="card reveal">
+          <div class="card-img-wrap">
+            <img src="assets/wrap.png" alt="Avocado Chicken Wrap" class="img-responsive">
+            <span class="card-badge bg-accent">Fresh Choice</span>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Avocado Chicken Wrap</h3>
+            <p class="card-text">Grilled chicken breast, fresh avocado, shredded cabbage, honey lime vinaigrette, spinach tortilla.</p>
+            <div class="card-footer">
+              <span class="card-price">$11.49</span>
+              <a href="menu.html" class="btn btn-outline" data-nav>Order Now</a>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="card reveal">
+          <div class="card-img-wrap">
+            <img src="assets/bowl.png" alt="HiFi Poke Bowl" class="img-responsive">
+            <span class="card-badge bg-primary">High Protein</span>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">HiFi Poke Bowl</h3>
+            <p class="card-text">Seared sushi-grade tuna or crispy organic tofu, brown rice, edamame, cucumber, sriracha aioli.</p>
+            <div class="card-footer">
+              <span class="card-price">$14.99</span>
+              <a href="menu.html" class="btn btn-outline" data-nav>Order Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section-padding bg-light">
+      <div class="container">
+        <div class="text-center" style="margin-bottom: 3rem;">
+          <span class="section-label" style="justify-content: center;">Diner Love</span>
+          <h2 class="section-title">What Our Foodies Say</h2>
+        </div>
+        <div class="grid grid-3 stagger">
+          <div class="card p-lg reveal">
+            <div class="stars" style="color: var(--hifi-yellow); margin-bottom: 1rem;">⭐⭐⭐⭐⭐</div>
+            <p class="card-text" style="font-style: italic; margin-bottom: 0;">"The best burger I've had in years! And the live chat widget let me add extra jalapenos and customize it exactly how I wanted. Brilliant concept!"</p>
+            <h4 style="margin-top: 1.5rem; font-family: var(--font-display);">— Marcus K.</h4>
+          </div>
+          <div class="card p-lg reveal">
+            <div class="stars" style="color: var(--hifi-yellow); margin-bottom: 1rem;">⭐⭐⭐⭐⭐</div>
+            <p class="card-text" style="font-style: italic; margin-bottom: 0;">"Fast, fresh, and friendly. Ordering via their Chat Center feels like texting a buddy who just happens to make amazing wraps and milkshakes."</p>
+            <h4 style="margin-top: 1.5rem; font-family: var(--font-display);">— Sarah L.</h4>
+          </div>
+          <div class="card p-lg reveal">
+            <div class="stars" style="color: var(--hifi-yellow); margin-bottom: 1rem;">⭐⭐⭐⭐⭐</div>
+            <p class="card-text" style="font-style: italic; margin-bottom: 0;">"The Poke Bowl is incredibly fresh. I also used their catering service for a birthday party last week, and the setup was absolutely perfect."</p>
+            <h4 style="margin-top: 1.5rem; font-family: var(--font-display);">— David P.</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call To Action (CTA) -->
+    <section class="section-padding bg-primary text-white text-center" style="background: var(--grad-red);">
+      <div class="container reveal">
+        <h2 class="display-font" style="font-size: 2.5rem; margin-bottom: 1rem; color: #fff;">Ready for the Ultimate Diner Experience?</h2>
+        <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9; max-width: 600px; margin-inline: auto;">Visit us in store, order online, or chat with our live agents now to build your perfect custom food creation.</p>
+        <div class="flex-center" style="gap: 1.5rem; flex-wrap: wrap;">
+          <a href="menu.html" class="btn btn-gold btn-lg" data-nav>Order Now 🛒</a>
+          <a href="chat.html" class="btn btn-secondary btn-lg" data-nav>Launch Live Chat 💬</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="margin-bottom:1rem;">
+            <div class="logo-icon">🍔</div>
+            <div class="logo-text">
+              <span class="logo-name">HiFi Chats</span>
+              <span class="logo-tagline">Fast Food · Chat Center</span>
+            </div>
+          </div>
+          <p class="footer-desc">Where every bite starts a conversation. Fresh food made daily with love, served with a smile.</p>
+          <div class="footer-social">
+            <a href="#" class="social-btn" aria-label="Instagram">📸</a>
+            <a href="#" class="social-btn" aria-label="Twitter">🐦</a>
+            <a href="#" class="social-btn" aria-label="Facebook">📘</a>
+            <a href="#" class="social-btn" aria-label="TikTok">🎵</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-col-title">Quick Links</p>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Our Menu</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="catering.html">Catering</a></li>
+            <li><a href="chat.html">Chat Center</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Menu</p>
+          <ul class="footer-links">
+            <li><a href="menu.html">Burgers</a></li>
+            <li><a href="menu.html">Wraps</a></li>
+            <li><a href="menu.html">Bowls</a></li>
+            <li><a href="menu.html">Sides & Fries</a></li>
+            <li><a href="menu.html">Drinks & Shakes</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Hours</p>
+          <div class="footer-hours">
+            <p><strong>Mon – Fri</strong><br>10:00 AM – 10:00 PM</p>
+            <br>
+            <p><strong>Sat – Sun</strong><br>9:00 AM – 11:00 PM</p>
+            <br>
+            <p>📍 123 HiFi Street, Flavor Town</p>
+            <p>📞 (555) 444-HIFI</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ticker-wrap" style="background:var(--hifi-dark2);border-top:1px solid var(--hifi-border);">
+      <div class="ticker-track">
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> that good, good</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> burgers</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> bowls</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> wraps</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> that good, good</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> burgers</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> bowls</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> wraps</span>
+      </div>
+    </div>
+    <div class="container">
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 HiFi Chats. Made with <span>❤</span> and hot sauce.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Order Button -->
+  <a href="menu.html" class="fab-order" id="fab-order" aria-label="Order Now">
+    <span class="fab-pulse"></span> Order Now
+  </a>
+
+  <!-- Chat Widget -->
+  <div class="chat-widget">
+    <div class="chat-popup" id="chat-popup">
+      <div class="chat-popup-header">
+        <div class="chat-popup-avatar">🧑‍🍳</div>
+        <div class="chat-popup-info">
+          <strong>HiFi Support</strong>
+          <small>Usually replies instantly</small>
+        </div>
+        <div class="online-dot"></div>
+      </div>
+      <div class="chat-popup-body">
+        <div class="chat-bubble-msg">👋 Hey! Ready to order? We've got today's specials waiting for you!</div>
+        <div class="chat-bubble-msg" style="animation-delay:0.2s">🍔 Our HiFi Classic is 20% off today only!</div>
+        <a href="chat.html" class="chat-popup-cta">Start Chatting →</a>
+      </div>
+    </div>
+    <button class="chat-widget-btn" id="chat-widget-btn" aria-label="Open chat">💬</button>
+    <span class="chat-widget-badge">2</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/hero.js"></script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+/* ====================================
+   HiFi Chats – Design System / main.css
+   ==================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Pacifico&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ── CSS Custom Properties ── */
+:root {
+  /* Brand Colors */
+  --hifi-red:       #E8272A;
+  --hifi-red-dark:  #B01E20;
+  --hifi-red-light: #FF4D50;
+  --hifi-yellow:    #FFD23F;
+  --hifi-yellow-dk: #E8BB20;
+  --hifi-orange:    #FF6B35;
+  --hifi-green:     #2ECC71;
+  --hifi-dark:      #0F0F1A;
+  --hifi-dark2:     #16162A;
+  --hifi-charcoal:  #1E1E35;
+  --hifi-card:      #252540;
+  --hifi-border:    #2E2E50;
+  --hifi-cream:     #FFF8F0;
+  --hifi-muted:     #A0A0C0;
+  --hifi-white:     #FFFFFF;
+
+  /* Gradients */
+  --grad-hero:   linear-gradient(135deg, #0F0F1A 0%, #1A0A0A 50%, #0F0F1A 100%);
+  --grad-red:    linear-gradient(135deg, #E8272A, #FF6B35);
+  --grad-gold:   linear-gradient(135deg, #FFD23F, #FF6B35);
+  --grad-card:   linear-gradient(145deg, #252540, #1A1A30);
+  --grad-shine:  linear-gradient(45deg, transparent 30%, rgba(255,210,63,0.08) 50%, transparent 70%);
+
+  /* Typography */
+  --font-display: 'Righteous', sans-serif;
+  --font-accent:  'Pacifico', cursive;
+  --font-body:    'Inter', sans-serif;
+
+  /* Spacing */
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 5rem;
+
+  /* Border Radius */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-xl:   32px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-sm:   0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md:   0 8px 32px rgba(0,0,0,0.4);
+  --shadow-lg:   0 20px 60px rgba(0,0,0,0.5);
+  --shadow-red:  0 8px 32px rgba(232,39,42,0.35);
+  --shadow-gold: 0 8px 32px rgba(255,210,63,0.25);
+
+  /* Transitions */
+  --trans-fast:   0.15s ease;
+  --trans-mid:    0.3s ease;
+  --trans-slow:   0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Z-Index */
+  --z-base: 1;
+  --z-above: 10;
+  --z-nav: 100;
+  --z-modal: 1000;
+
+  /* Layout */
+  --max-width: 1280px;
+  --nav-height: 80px;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--hifi-dark);
+  color: var(--hifi-white);
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* ── Utility Classes ── */
+.container {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-xl);
+}
+
+.section-padding {
+  padding-block: var(--space-3xl);
+}
+
+.text-center { text-align: center; }
+.text-red    { color: var(--hifi-red); }
+.text-yellow { color: var(--hifi-yellow); }
+.text-muted  { color: var(--hifi-muted); }
+.text-white  { color: var(--hifi-white); }
+
+.shadow-lg { box-shadow: var(--shadow-lg); }
+
+.display-font  { font-family: var(--font-display); }
+.accent-font   { font-family: var(--font-accent); }
+
+/* ── Section Headers ── */
+.section-label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--hifi-yellow);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.section-label::before,
+.section-label::after {
+  content: '';
+  height: 1px;
+  width: 40px;
+  background: var(--hifi-yellow);
+  opacity: 0.5;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  margin-bottom: var(--space-md);
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--hifi-muted);
+  max-width: 540px;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.85em 2em;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  transition: all var(--trans-slow);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--grad-shine);
+  transform: translateX(-100%);
+  transition: transform var(--trans-mid);
+}
+
+.btn:hover::after {
+  transform: translateX(100%);
+}
+
+.btn-primary {
+  background: var(--grad-red);
+  color: var(--hifi-white);
+  box-shadow: var(--shadow-red);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 40px rgba(232,39,42,0.5);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--hifi-white);
+  border: 2px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  border-color: var(--hifi-yellow);
+  color: var(--hifi-yellow);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(255,210,63,0.15);
+}
+
+.btn-gold {
+  background: var(--grad-gold);
+  color: var(--hifi-dark);
+  box-shadow: var(--shadow-gold);
+  font-weight: 700;
+}
+
+.btn-gold:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 40px rgba(255,210,63,0.4);
+}
+
+.btn-lg {
+  padding: 1.1em 2.5em;
+  font-size: 1rem;
+}
+
+.btn-sm {
+  padding: 0.55em 1.4em;
+  font-size: 0.8rem;
+}
+
+.btn-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform var(--trans-fast);
+}
+
+.btn:hover .btn-icon {
+  transform: translateX(4px);
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--grad-card);
+  border: 1px solid var(--hifi-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--trans-mid);
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(232,39,42,0.3);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(232,39,42,0.1);
+}
+
+/* ── Badges ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge-hot  { background: rgba(232,39,42,0.15); color: var(--hifi-red-light); border: 1px solid rgba(232,39,42,0.3); }
+.badge-new  { background: rgba(46,204,113,0.15); color: var(--hifi-green); border: 1px solid rgba(46,204,113,0.3); }
+.badge-veg  { background: rgba(46,204,113,0.15); color: var(--hifi-green); border: 1px solid rgba(46,204,113,0.3); }
+.badge-pop  { background: rgba(255,210,63,0.15); color: var(--hifi-yellow); border: 1px solid rgba(255,210,63,0.3); }
+
+/* ── Scroll-in animations ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-left.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-right.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Page Hero Overlay ── */
+.page-hero {
+  position: relative;
+  padding-top: calc(var(--nav-height) + 4rem);
+  padding-bottom: 4rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center top, rgba(232,39,42,0.2) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Divider ── */
+.divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hifi-border), transparent);
+  margin-block: var(--space-2xl);
+}
+
+/* ── Responsive Grid Helpers ── */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-xl); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-xl); }
+
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .container { padding-inline: var(--space-lg); }
+  .section-padding { padding-block: var(--space-2xl); }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}

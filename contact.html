@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍔</text></svg>">
+  <title>Contact Us & Locations | HiFi Chats - Street Food & Conversation</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* Contact page styles */
+    .contact-hero {
+      padding-top: calc(var(--nav-height) + 3rem);
+      padding-bottom: 2rem;
+      text-align: center;
+    }
+    
+    /* Contact Cards */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+      margin-bottom: var(--space-3xl);
+    }
+    .contact-card {
+      padding: var(--space-xl);
+      text-align: center;
+    }
+    .contact-icon {
+      font-size: 2.2rem;
+      margin-bottom: var(--space-sm);
+      display: inline-block;
+    }
+    .contact-label {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      margin-bottom: var(--space-xs);
+      color: #fff;
+    }
+    .contact-value {
+      color: var(--hifi-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    /* Columns split: Form & Map */
+    .contact-split {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--space-3xl);
+      align-items: flex-start;
+      margin-bottom: var(--space-3xl);
+    }
+    .contact-form-card {
+      background: var(--hifi-card);
+      border: 1px solid var(--hifi-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-2xl);
+      box-shadow: var(--shadow-lg);
+    }
+    .form-group {
+      margin-bottom: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--hifi-muted);
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: var(--radius-md);
+      background: var(--hifi-charcoal);
+      border: 1px solid var(--hifi-border);
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color var(--trans-fast);
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--hifi-red);
+    }
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    
+    /* Map layout */
+    .map-pane {
+      height: 100%;
+      min-height: 450px;
+      background: var(--hifi-card);
+      border: 1px solid var(--hifi-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+    .map-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-xl);
+      background: radial-gradient(circle, rgba(15,15,26,0.3) 0%, rgba(15,15,26,0.95) 100%), url('assets/interior.png');
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+    }
+    .map-pin {
+      font-size: 3rem;
+      animation: bounce-pin 2s ease infinite;
+      margin-bottom: var(--space-md);
+    }
+    @keyframes bounce-pin {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .map-address {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: #fff;
+      margin-bottom: var(--space-sm);
+    }
+    .map-sub {
+      color: var(--hifi-muted);
+      font-size: 0.85rem;
+      margin-bottom: var(--space-xl);
+    }
+    
+    /* Hours section */
+    .hours-card {
+      background: var(--hifi-dark2);
+      border: 1px solid var(--hifi-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-2xl);
+      box-shadow: var(--shadow-sm);
+    }
+    .hours-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--space-md);
+    }
+    .hours-table td {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--hifi-border);
+      font-size: 0.95rem;
+    }
+    .hours-table tr:last-child td {
+      border-bottom: none;
+    }
+    .hours-day {
+      color: var(--hifi-muted);
+    }
+    .hours-time {
+      text-align: right;
+      font-weight: 700;
+      color: var(--hifi-yellow);
+    }
+    
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-split { grid-template-columns: 1fr; gap: var(--space-xl); }
+      .map-pane { min-height: 300px; }
+    }
+  </style>
+</head>
+<body class="particles-bg">
+  <div class="page-transition"></div>
+
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo" data-nav>
+        <div class="logo-icon">🍔</div>
+        <div class="logo-text">
+          <span class="logo-name">HiFi Chats</span>
+          <span class="logo-tagline">Fast Food · Chat Center</span>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link" data-nav>Home</a>
+        <a href="menu.html" class="nav-link" data-nav>Menu</a>
+        <a href="about.html" class="nav-link" data-nav>About</a>
+        <a href="catering.html" class="nav-link" data-nav>Catering</a>
+        <a href="chat.html" class="nav-link" data-nav>Chat Center</a>
+        <a href="contact.html" class="nav-link active" data-nav>Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button type="button" class="nav-order-btn cart-toggle">Order Now 🛒 <span class="order-badge" style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:#FFD23F;color:#0F0F1A;border-radius:50%;font-size:0.65rem;font-weight:800;margin-left:4px;transition:transform 0.2s;">0</span></button>
+      </div>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Menu -->
+  <nav class="nav-mobile" id="mobile-nav">
+    <a href="index.html" class="nav-link" data-nav>Home</a>
+    <a href="menu.html" class="nav-link" data-nav>Menu</a>
+    <a href="about.html" class="nav-link" data-nav>About</a>
+    <a href="catering.html" class="nav-link" data-nav>Catering</a>
+    <a href="chat.html" class="nav-link" data-nav>Chat Center</a>
+    <a href="contact.html" class="nav-link active" data-nav>Contact</a>
+    <button type="button" class="nav-order-btn cart-toggle">Order Now 🛒 <span class="order-badge" style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:#FFD23F;color:#0F0F1A;border-radius:50%;font-size:0.65rem;font-weight:800;margin-left:4px;transition:transform 0.2s;">0</span></button>
+  </nav>
+
+  <main class="container">
+    <section class="contact-hero">
+      <span class="section-label" style="justify-content: center;">Get in touch</span>
+      <h1 class="section-title">Contact & Locations</h1>
+      <p class="section-subtitle" style="margin-inline: auto;">Have a question, feedback, or just want to chat? We'd love to hear from you.</p>
+    </section>
+
+    <!-- Info Cards Grid -->
+    <div class="contact-grid stagger">
+      <div class="card contact-card reveal">
+        <span class="contact-icon">📞</span>
+        <h3 class="contact-label">Phone Support</h3>
+        <p class="contact-value">(555) 444-HIFI<br>Catering: (555) 444-HIFI-CAT</p>
+      </div>
+      <div class="card contact-card reveal">
+        <span class="contact-icon">📧</span>
+        <h3 class="contact-label">Email</h3>
+        <p class="contact-value">hello@hifichats.com<br>events@hifichats.com</p>
+      </div>
+      <div class="card contact-card reveal">
+        <span class="contact-icon">📍</span>
+        <h3 class="contact-label">Our Flagship</h3>
+        <p class="contact-value">123 HiFi Street, Flavor Town<br>Edmonton, AB, Canada</p>
+      </div>
+    </div>
+
+    <!-- Form and Map Split -->
+    <div class="contact-split">
+      <!-- Form card -->
+      <div class="reveal-left">
+        <div class="contact-form-card">
+          <h2 class="display-font" style="font-size: 1.4rem; margin-bottom: 1.5rem; color: #fff;">Send a Message</h2>
+          
+          <form onsubmit="event.preventDefault(); alert('🎉 Message sent successfully! We\'ll reply shortly.');">
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-input" placeholder="Sarah Jenkins" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" placeholder="sarah@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <select class="form-select">
+                <option>General Inquiry</option>
+                <option>Feedback / Suggestion</option>
+                <option>Order Issue</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea class="form-textarea" placeholder="Type your message details here..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 0.5rem;">Send Message</button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Map & Hours pane -->
+      <div class="reveal-right" style="display: flex; flex-direction: column; gap: var(--space-xl);">
+        <div class="map-pane">
+          <div class="map-placeholder">
+            <span class="map-pin">📍</span>
+            <h3 class="map-address">HiFi Chats Flagship Lounge</h3>
+            <p class="map-sub">123 HiFi Street, Flavor Town, Edmonton, AB</p>
+            <a href="https://maps.google.com" target="_blank" class="btn btn-secondary btn-sm">Get Directions ➔</a>
+          </div>
+        </div>
+        
+        <div class="hours-card">
+          <h3 class="display-font" style="font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem;">Lobby & Grill Hours</h3>
+          <table class="hours-table">
+            <tr>
+              <td class="hours-day">Monday – Thursday</td>
+              <td class="hours-time">11:00 AM – 10:00 PM</td>
+            </tr>
+            <tr>
+              <td class="hours-day">Friday – Saturday</td>
+              <td class="hours-time">11:00 AM – 12:00 AM</td>
+            </tr>
+            <tr>
+              <td class="hours-day">Sunday</td>
+              <td class="hours-time">11:00 AM – 9:00 PM</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="margin-bottom:1rem;">
+            <div class="logo-icon">🍔</div>
+            <div class="logo-text">
+              <span class="logo-name">HiFi Chats</span>
+              <span class="logo-tagline">Fast Food · Chat Center</span>
+            </div>
+          </div>
+          <p class="footer-desc">Where every bite starts a conversation. Fresh food made daily with love, served with a smile.</p>
+          <div class="footer-social">
+            <a href="#" class="social-btn" aria-label="Instagram">📸</a>
+            <a href="#" class="social-btn" aria-label="Twitter">🐦</a>
+            <a href="#" class="social-btn" aria-label="Facebook">📘</a>
+            <a href="#" class="social-btn" aria-label="TikTok">🎵</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-col-title">Quick Links</p>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Our Menu</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="catering.html">Catering</a></li>
+            <li><a href="chat.html">Chat Center</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Menu</p>
+          <ul class="footer-links">
+            <li><a href="menu.html">Burgers</a></li>
+            <li><a href="menu.html">Wraps</a></li>
+            <li><a href="menu.html">Bowls</a></li>
+            <li><a href="menu.html">Sides & Fries</a></li>
+            <li><a href="menu.html">Drinks & Shakes</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">Hours</p>
+          <div class="footer-hours">
+            <p><strong>Mon – Fri</strong><br>10:00 AM – 10:00 PM</p>
+            <br>
+            <p><strong>Sat – Sun</strong><br>9:00 AM – 11:00 PM</p>
+            <br>
+            <p>📍 123 HiFi Street, Flavor Town</p>
+            <p>📞 (555) 444-HIFI</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ticker-wrap" style="background:var(--hifi-dark2);border-top:1px solid var(--hifi-border);">
+      <div class="ticker-track">
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> that good, good</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> burgers</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> bowls</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> wraps</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> that good, good</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> burgers</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> bowls</span>
+        <span class="ticker-item" style="color:var(--hifi-muted)"><span class="ticker-dot" style="color:var(--hifi-red)">•</span> wraps</span>
+      </div>
+    </div>
+    <div class="container">
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 HiFi Chats. Made with <span>❤</span> and hot sauce.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Order Button -->
+  <a href="menu.html" class="fab-order" id="fab-order" aria-label="Order Now">
+    <span class="fab-pulse"></span> Order Now
+  </a>
+
+  <!-- Chat Widget -->
+  <div class="chat-widget">
+    <div class="chat-popup" id="chat-popup">
+      <div class="chat-popup-header">
+        <div class="chat-popup-avatar">🧑‍🍳</div>
+        <div class="chat-popup-info">
+          <strong>HiFi Support</strong>
+          <small>Usually replies instantly</small>
+        </div>
+        <div class="online-dot"></div>
+      </div>
+      <div class="chat-popup-body">
+        <div class="chat-bubble-msg">👋 Hey! Ready to order? We've got today's specials waiting for you!</div>
+        <div class="chat-bubble-msg" style="animation-delay:0.2s">🍔 Our HiFi Classic is 20% off today only!</div>
+        <a href="chat.html" class="chat-popup-cta">Start Chatting →</a>
+      </div>
+    </div>
+    <button class="chat-widget-btn" id="chat-widget-btn" aria-label="Open chat">💬</button>
+    <span class="chat-widget-badge">2</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
