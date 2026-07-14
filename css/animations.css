@@ -201,14 +201,16 @@
 }
 
 /* ── Particle dots background ── */
+/* The overlay is fixed to the viewport. Never put overflow:hidden on
+   this class: it sits on <body>, and body overflow propagates to the
+   viewport, which blocks wheel/touch scrolling entirely. */
 .particles-bg {
   position: relative;
-  overflow: hidden;
 }
 
 .particles-bg::before {
   content: '';
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-image:
     radial-gradient(circle, rgba(255,210,63,0.08) 1px, transparent 1px),
