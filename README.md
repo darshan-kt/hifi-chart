@@ -64,7 +64,7 @@ files — there's no templating layer.
 **Add / change a menu item**
 Edit the `menuData` object at the top of `js/menu.js`. Each item is:
 ```js
-{ id: 'b5', name: 'New Burger', desc: '...', price: 13.99, badge: 'new', badgeText: '✨ New', calories: 700, image: 'assets/burger.png' }
+{ id: 'b5', name: 'New Burger', desc: '...', price: 13.99, badge: 'new', badgeText: '✨ New', calories: 700, image: 'assets/burger.webp' }
 ```
 - `id` must be unique across *all* categories (menu, chat, and cart all
   key off it — reusing an id will merge two different items into one
