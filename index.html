@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍔</text></svg>">
+  <meta name="description" content="HiFi Chats — handcrafted smash burgers, wraps, and bowls with a live chat ordering experience. Order online or visit our diner in Flavor Town.">
+  <meta name="theme-color" content="#0F0F1A">
   <title>Home | HiFi Chats - Street Food & Conversation</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <!-- FontAwesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
@@ -109,7 +109,11 @@
     }
     #hero-prev { left: var(--space-xl); }
     #hero-next { right: var(--space-xl); }
-    
+    #hero-prev span {
+      display: inline-block;
+      transform: scaleX(-1);
+    }
+
     .hero-dots {
       position: absolute;
       bottom: var(--space-xl);
@@ -124,6 +128,8 @@
       height: 12px;
       border-radius: 50%;
       background: rgba(255,255,255,0.3);
+      border: none;
+      padding: 0;
       cursor: pointer;
       transition: all var(--trans-fast);
     }
@@ -374,14 +380,14 @@
       </div>
 
       <!-- Slider Navigation Buttons -->
-      <button id="hero-prev" class="slider-btn" aria-label="Previous Slide">➔</button>
-      <button id="hero-next" class="slider-btn" aria-label="Next Slide">➔</button>
+      <button id="hero-prev" class="slider-btn" aria-label="Previous slide"><span>➔</span></button>
+      <button id="hero-next" class="slider-btn" aria-label="Next slide"><span>➔</span></button>
 
       <!-- Slider Pagination Dots -->
-      <div class="hero-dots">
-        <span class="hero-dot active"></span>
-        <span class="hero-dot"></span>
-        <span class="hero-dot"></span>
+      <div class="hero-dots" role="tablist" aria-label="Hero slides">
+        <button class="hero-dot active" aria-label="Go to slide 1"></button>
+        <button class="hero-dot" aria-label="Go to slide 2"></button>
+        <button class="hero-dot" aria-label="Go to slide 3"></button>
       </div>
     </section>
 

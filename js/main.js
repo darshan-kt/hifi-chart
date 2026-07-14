@@ -28,8 +28,30 @@ document.addEventListener('DOMContentLoaded', () => {
   initFAB();
   initChatWidget();
   initCounters();
+  initDemoForms();
   setActiveNavLink();
 });
+
+// ── Demo Forms ────────────────────────
+// Forms with a data-success attribute show an inline confirmation
+// instead of posting anywhere (this site has no backend).
+function initDemoForms() {
+  document.querySelectorAll('form[data-success]').forEach(form => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let note = form.querySelector('.form-success');
+      if (!note) {
+        note = document.createElement('p');
+        note.className = 'form-success';
+        note.setAttribute('role', 'status');
+        form.appendChild(note);
+      }
+      note.textContent = form.dataset.success;
+      form.reset();
+      note.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+}
 
 // ── Navbar ────────────────────────────
 function initNavbar() {

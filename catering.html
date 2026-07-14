@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍔</text></svg>">
+  <meta name="description" content="HiFi Chats event catering — street food spreads for parties, offices, and events from 10 to 50+ guests. Pick a package and book online.">
+  <meta name="theme-color" content="#0F0F1A">
   <title>Catering & Events | HiFi Chats - Street Food & Conversation</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -333,31 +335,31 @@
           <div class="booking-form-card">
             <h3 class="display-font" style="font-size: 1.4rem; margin-bottom: 1.5rem; color: #fff;">Catering Request</h3>
             
-            <form onsubmit="event.preventDefault(); alert('🎉 Request submitted! Our catering manager will contact you within 2 hours.');">
+            <form data-success="🎉 Request submitted! Our catering manager will contact you within 2 hours.">
               <div class="form-grid">
                 <div class="form-group">
-                  <label class="form-label">Your Name</label>
-                  <input type="text" class="form-input" placeholder="Aaron Miller" required>
+                  <label class="form-label" for="cater-name">Your Name</label>
+                  <input type="text" id="cater-name" name="name" autocomplete="name" class="form-input" placeholder="Aaron Miller" required>
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Email Address</label>
-                  <input type="email" class="form-input" placeholder="aaron@company.com" required>
+                  <label class="form-label" for="cater-email">Email Address</label>
+                  <input type="email" id="cater-email" name="email" autocomplete="email" class="form-input" placeholder="aaron@company.com" required>
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Phone Number</label>
-                  <input type="tel" class="form-input" placeholder="(555) 000-0000" required>
+                  <label class="form-label" for="cater-phone">Phone Number</label>
+                  <input type="tel" id="cater-phone" name="phone" autocomplete="tel" class="form-input" placeholder="(555) 000-0000" required>
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Event Date</label>
-                  <input type="date" class="form-input" required>
+                  <label class="form-label" for="cater-date">Event Date</label>
+                  <input type="date" id="cater-date" name="event_date" class="form-input" required>
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Guest Count</label>
-                  <input type="number" class="form-input" placeholder="25" min="10" required>
+                  <label class="form-label" for="cater-guests">Guest Count</label>
+                  <input type="number" id="cater-guests" name="guest_count" class="form-input" placeholder="25" min="10" required>
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Selected Spread</label>
-                  <select class="form-select">
+                  <label class="form-label" for="cater-spread">Selected Spread</label>
+                  <select id="cater-spread" name="spread" class="form-select">
                     <option>Mini Diner Feast ($299)</option>
                     <option>Party Pack Spread ($599)</option>
                     <option>The Grand Lounge ($999)</option>
@@ -365,8 +367,8 @@
                   </select>
                 </div>
                 <div class="form-group full">
-                  <label class="form-label">Special Requests (Allergies, customize, etc.)</label>
-                  <textarea class="form-textarea" placeholder="We need 3 vegan options, extra dip sauces, and drop off in the back lobby."></textarea>
+                  <label class="form-label" for="cater-notes">Special Requests (Allergies, customize, etc.)</label>
+                  <textarea id="cater-notes" name="notes" class="form-textarea" placeholder="We need 3 vegan options, extra dip sauces, and drop off in the back lobby."></textarea>
                 </div>
               </div>
               <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Submit Request</button>

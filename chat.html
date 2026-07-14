@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍔</text></svg>">
+  <meta name="description" content="Chat live with the HiFi Chats kitchen team — get menu recommendations, customize your order, and unlock daily deals in the Live Chat Center.">
+  <meta name="theme-color" content="#0F0F1A">
   <title>Chat Center | HiFi Chats - Street Food & Conversation</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -566,11 +568,18 @@
       });
     }
 
+    // Escape user-typed text so it can't inject HTML into the chat log
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
     function handleSendMsg() {
       const text = chatInput.value.trim();
       if (!text) return;
-      
-      appendMessage('👤', text, true);
+
+      appendMessage('👤', escapeHtml(text), true);
       chatInput.value = '';
       
       // Trigger typing
@@ -597,15 +606,15 @@
 
       if (activeAgent.name === 'Chef Bot') {
         if (query.includes('burger')) {
-          reply = "🍔 I highly recommend **The HiFi Classic** ($12.99). It comes with double smash patties, melted American cheese, caramelized onions, toasted brioche, and our secret burger glaze. Want me to add it to your order?";
+          reply = "🍔 I highly recommend <b>The HiFi Classic</b> ($12.99). It comes with double smash patties, melted American cheese, caramelized onions, toasted brioche, and our secret burger glaze. Want me to add it to your order?";
           item = chatMenuItems.burger;
         } else if (query.includes('wrap')) {
-          reply = "🌯 Our **Avocado Chicken Wrap** ($11.49) is a massive hit! It features grilled tender chicken, fresh sliced avocado, shredded crunchy cabbage, and honey lime dressing. Want me to add it to your order?";
+          reply = "🌯 Our <b>Avocado Chicken Wrap</b> ($11.49) is a massive hit! It features grilled tender chicken, fresh sliced avocado, shredded crunchy cabbage, and honey lime dressing. Want me to add it to your order?";
           item = chatMenuItems.wrap;
         } else if (query.includes('bowl')) {
-          reply = "🥣 Try the **HiFi Poke Bowl** ($14.49) - sushi-grade salmon, mango, edamame, and pickled ginger over warm rice. Want me to add it to your order?";
+          reply = "🥣 Try the <b>HiFi Poke Bowl</b> ($14.49) - sushi-grade salmon, mango, edamame, and pickled ginger over warm rice. Want me to add it to your order?";
           item = chatMenuItems.bowl;
-        } else if (query.includes('hello') || query.includes('hi')) {
+        } else if (/\b(hello|hi|hey)\b/.test(query)) {
           reply = "👋 Hello! Ready to talk food? Ask me about 'burgers', 'wraps', or 'shakes'!";
         } else {
           reply = "👨‍🍳 That sounds interesting! We customize all ingredients. You can head over to our <b>Menu page</b>, click on any item, and add custom instructions in the order note!";

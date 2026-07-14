@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍔</text></svg>">
+  <meta name="description" content="Get in touch with HiFi Chats — send a message, find our flagship diner at 123 HiFi Street in Flavor Town, or check our opening hours.">
+  <meta name="theme-color" content="#0F0F1A">
   <title>Contact Us & Locations | HiFi Chats - Street Food & Conversation</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -255,18 +257,18 @@
         <div class="contact-form-card">
           <h2 class="display-font" style="font-size: 1.4rem; margin-bottom: 1.5rem; color: #fff;">Send a Message</h2>
           
-          <form onsubmit="event.preventDefault(); alert('🎉 Message sent successfully! We\'ll reply shortly.');">
+          <form data-success="🎉 Message sent successfully! We'll reply shortly.">
             <div class="form-group">
-              <label class="form-label">Full Name</label>
-              <input type="text" class="form-input" placeholder="Sarah Jenkins" required>
+              <label class="form-label" for="contact-name">Full Name</label>
+              <input type="text" id="contact-name" name="name" autocomplete="name" class="form-input" placeholder="Sarah Jenkins" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Email Address</label>
-              <input type="email" class="form-input" placeholder="sarah@example.com" required>
+              <label class="form-label" for="contact-email">Email Address</label>
+              <input type="email" id="contact-email" name="email" autocomplete="email" class="form-input" placeholder="sarah@example.com" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Subject</label>
-              <select class="form-select">
+              <label class="form-label" for="contact-subject">Subject</label>
+              <select id="contact-subject" name="subject" class="form-select">
                 <option>General Inquiry</option>
                 <option>Feedback / Suggestion</option>
                 <option>Order Issue</option>
@@ -274,8 +276,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Message</label>
-              <textarea class="form-textarea" placeholder="Type your message details here..." required></textarea>
+              <label class="form-label" for="contact-message">Message</label>
+              <textarea id="contact-message" name="message" class="form-textarea" placeholder="Type your message details here..." required></textarea>
             </div>
             <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 0.5rem;">Send Message</button>
           </form>
@@ -289,7 +291,7 @@
             <span class="map-pin">📍</span>
             <h3 class="map-address">HiFi Chats Flagship Lounge</h3>
             <p class="map-sub">123 HiFi Street, Flavor Town, Edmonton, AB</p>
-            <a href="https://maps.google.com" target="_blank" class="btn btn-secondary btn-sm">Get Directions ➔</a>
+            <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">Get Directions ➔</a>
           </div>
         </div>
         
@@ -297,16 +299,12 @@
           <h3 class="display-font" style="font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem;">Lobby & Grill Hours</h3>
           <table class="hours-table">
             <tr>
-              <td class="hours-day">Monday – Thursday</td>
-              <td class="hours-time">11:00 AM – 10:00 PM</td>
+              <td class="hours-day">Monday – Friday</td>
+              <td class="hours-time">10:00 AM – 10:00 PM</td>
             </tr>
             <tr>
-              <td class="hours-day">Friday – Saturday</td>
-              <td class="hours-time">11:00 AM – 12:00 AM</td>
-            </tr>
-            <tr>
-              <td class="hours-day">Sunday</td>
-              <td class="hours-time">11:00 AM – 9:00 PM</td>
+              <td class="hours-day">Saturday – Sunday</td>
+              <td class="hours-time">9:00 AM – 11:00 PM</td>
             </tr>
           </table>
         </div>

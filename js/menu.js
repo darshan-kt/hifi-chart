@@ -92,6 +92,9 @@ function renderMenuItems(category) {
       });
     });
 
+    // Keep the active search query applied across category switches
+    applySearchFilter();
+
     menuGrid.style.opacity = '1';
     menuGrid.style.transform = 'translateY(0)';
   }, 200);
@@ -133,19 +136,23 @@ function createMenuCard(item) {
 }
 
 // ── Search ─────────────────────────────
+function applySearchFilter() {
+  const searchInput = document.getElementById('menu-search');
+  if (!searchInput) return;
+
+  const query = searchInput.value.toLowerCase().trim();
+  document.querySelectorAll('.menu-card').forEach(card => {
+    const name = card.querySelector('.menu-card-name')?.textContent.toLowerCase() || '';
+    const desc = card.querySelector('.menu-card-desc')?.textContent.toLowerCase() || '';
+    card.style.display = (name.includes(query) || desc.includes(query)) ? '' : 'none';
+  });
+}
+
 function initMenuSearch() {
   const searchInput = document.getElementById('menu-search');
   if (!searchInput) return;
 
-  searchInput.addEventListener('input', () => {
-    const query = searchInput.value.toLowerCase().trim();
-    const cards = document.querySelectorAll('.menu-card');
-    cards.forEach(card => {
-      const name = card.querySelector('.menu-card-name')?.textContent.toLowerCase() || '';
-      const desc = card.querySelector('.menu-card-desc')?.textContent.toLowerCase() || '';
-      card.style.display = (name.includes(query) || desc.includes(query)) ? '' : 'none';
-    });
-  });
+  searchInput.addEventListener('input', applySearchFilter);
 }
 
 // ── Add to Order ──────────────────────
